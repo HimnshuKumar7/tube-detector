@@ -24,7 +24,7 @@ st.set_page_config(
 st.sidebar.title("⚙️ Settings")
 
 obb_default  = "models/obb_best.pt"
-pose_default = "models/pose_best.pt"
+pose_default = "models/tube_best.pt"
 
 st.sidebar.subheader("Model Paths")
 obb_path  = st.sidebar.text_input("OBB weights",  value=obb_default)
