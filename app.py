@@ -78,7 +78,7 @@ with tempfile.NamedTemporaryFile(suffix=os.path.splitext(uploaded.name)[1], dele
     tmp_path = tmp.name
 
 with st.spinner("Running detection…"):
-    detections = run_inference(tmp_path, obb_model, pose_model)
+    detections = run_inference(tmp_path, obb_model, pose_model,conf_thresh=conf_thresh)
 
 # ─── Draw annotations ─────────────────────────────────────────────────────────
 COLORS = [

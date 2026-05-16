@@ -31,7 +31,7 @@ def _nearest_pose(obb_cx, obb_cy, pose_dets):
     return pose_dets[idx] if dists[idx] < MAX_DIST else None
 
 
-def run_inference(image_path: str, obb_model, pose_model) -> list[dict]:
+def run_inference(image_path: str, obb_model, pose_model,conf_thresh: float = 0.25) -> list[dict]:
     """
     Run OBB + Pose inference on a single image.
 
@@ -42,7 +42,7 @@ def run_inference(image_path: str, obb_model, pose_model) -> list[dict]:
         conf                                ← OBB confidence
     """
     # ── OBB ──────────────────────────────────────────────────────────────────
-    obb_res = obb_model.predict(image_path, conf=CONF_THRESH, verbose=False)[0]
+    obb_res = obb_model.predict(image_path, conf=conf_thresh, verbose=False)[0]
     obb_dets = []
 
     if obb_res.obb is not None and len(obb_res.obb) > 0:
@@ -71,7 +71,7 @@ def run_inference(image_path: str, obb_model, pose_model) -> list[dict]:
             })
 
     # ── Pose ─────────────────────────────────────────────────────────────────
-    pose_res = pose_model.predict(image_path, conf=CONF_THRESH, verbose=False)[0]
+    pose_res = pose_model.predict(image_path, conf=conf_thresh, verbose=False)[0]
     pose_dets = []
 
     if pose_res.keypoints is not None and len(pose_res.boxes) > 0:
