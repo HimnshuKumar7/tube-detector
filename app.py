@@ -7,7 +7,6 @@ Run:
 """
 
 import math, os, tempfile
-import cv2
 import numpy as np
 import pandas as pd
 import streamlit as st
@@ -86,10 +85,8 @@ COLORS = [
     (200, 100, 255), (255, 210, 0), (0, 150, 255),
 ]
 
-img_bgr = cv2.imread(tmp_path)
-if img_bgr is None:
-    pil = Image.open(tmp_path).convert("RGB")
-    img_bgr = cv2.cvtColor(np.array(pil), cv2.COLOR_RGB2BGR)
+pil = Image.open(tmp_path).convert("RGB")
+img_bgr = np.array(pil)[:, :, ::-1].copy()  
 
 for idx, det in enumerate(detections):
     color = COLORS[idx % len(COLORS)]
@@ -120,7 +117,7 @@ for idx, det in enumerate(detections):
         cv2.putText(img_bgr, label, (cx+7, cy-5), cv2.FONT_HERSHEY_SIMPLEX,
                     0.5, color, 1, cv2.LINE_AA)
 
-img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
+img_rgb = img_bgr[:, :, ::-1].copy()
 n = len(detections)
 
 # ─── Layout: image left, results right ────────────────────────────────────────
