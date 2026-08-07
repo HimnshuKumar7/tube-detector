@@ -5,6 +5,8 @@ Used by both step4_inference_metrics.py and app.py.
 
 import math
 import numpy as np
+import os
+os.environ["YOLO_VERBOSE"] = "False"   
 from ultralytics import YOLO
 
 CONF_THRESH = 0.25
